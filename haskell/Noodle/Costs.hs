@@ -1,46 +1,29 @@
 module Noodle.Costs where
 
-type Invocation = String
+import Data.Function (on)
+import Data.List (sortBy)
+
+import qualified Data.Map as M
 
 data Cost = Cost
     { commandCount  :: Int
     , commandLength :: Int
     } deriving Show
 
-type InvocationWithCost = (Invocation, Cost)
+costs :: [String] -> [(String, Cost)]
+costs commands = M.toList . M.mapWithKey toCost
+               $ M.fromListWith (+) [(command, 1) | command <- commands]
 
-costs :: [Invocation] -> [InvocationWithCost]
-costs = foldl addCosts []
+    where
+        toCost :: String -> Int -> Cost
+        toCost command count = Cost count (length command)
 
-compareCosts :: Cost -> Cost -> Ordering
-compareCosts c1 c2 = compare (weight c1) (weight c2)
+top :: Int -> [(String, Cost)] -> [(String, Cost)]
+top n = take n . reverse . sortBy (compareCosts `on` snd)
+
+    where
+        compareCosts :: Cost -> Cost -> Ordering
+        compareCosts = compare `on` weight
 
 weight :: Cost -> Int
 weight (Cost cnt len) = cnt * len
-
-addCosts :: [InvocationWithCost] -> Invocation -> [InvocationWithCost]
-addCosts invocations invocation = updateCosts newCost
-    where
-        newCost :: Cost
-        newCost = incrementCost currentCost
-
-        currentCost :: Cost
-        currentCost = findCost invocations invocation
-
-        updateCosts :: Cost -> [InvocationWithCost]
-        updateCosts cost = (invocation, cost) : (dropInvocation invocation invocations)
-
-        dropInvocation :: Invocation -> [InvocationWithCost] -> [InvocationWithCost]
-        dropInvocation _ [] = []
-        dropInvocation invocation (x@(i,_):rest)
-            | i == invocation = rest
-            | otherwise = x : dropInvocation invocation rest
-
-incrementCost :: Cost -> Cost
-incrementCost cost = cost { commandCount = commandCount cost + 1 }
-
-findCost :: [InvocationWithCost] -> Invocation -> Cost
-findCost [] invocation = Cost 0 (length invocation)
-findCost ((i, c):rest) invocation
-    | i == invocation = c
-    | otherwise = findCost rest invocation

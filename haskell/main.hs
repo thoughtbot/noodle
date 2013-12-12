@@ -1,26 +1,19 @@
 module Main where
 
 import Noodle.Costs
-import Data.List (sortBy)
-import Data.Function (on)
 import System.Environment (getArgs)
 
 main :: IO ()
 main = do
-    lns <- fmap lines getContents
+    lim <- fmap (readFirstOr 10) getArgs
+    commands <- fmap parse getContents
 
-    args <- getArgs
+    mapM_ putStrLn $ map prettyPrint $ top lim $ costs commands
 
-    let n = read $ if null args then "10" else head args
+    where
+        readFirstOr v []     = v
+        readFirstOr _ (x:xs) = read x
 
-    mapM_ putStrLn $ map prettyPrint $ top n $ costs $ map toInvocation lns
+        parse = map (last . take 2 . words) . lines
 
-toInvocation :: String -> Invocation
-toInvocation = last . take 2 . words
-
-top :: Int -> [InvocationWithCost] -> [InvocationWithCost]
-top n = take n . reverse
-      . sortBy (compareCosts `on` snd)
-
-prettyPrint :: InvocationWithCost -> String
-prettyPrint (i,c) = i ++ ": " ++ show (weight c)
+        prettyPrint (command,cost) = command ++ ": " ++ show (weight cost)
