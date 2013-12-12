@@ -1,0 +1,3 @@
+# Noodle
+
+Commandline history analysis.
