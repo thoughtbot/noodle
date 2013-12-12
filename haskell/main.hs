@@ -19,8 +19,8 @@ parse = map (lastOr "" . take 2 . words) . lines
         lastOr _ xs = last xs
 
 costs :: [String] -> [CommandCount]
-costs commands = map (uncurry CommandCount)
-               $ M.toList $ M.fromListWith (+) [(command, 1) | command <- commands]
+costs commands = map (uncurry CommandCount) $ M.toList
+               $ M.fromListWith (+) [(command, 1) | command <- commands]
 
 toWeight :: CommandCount -> Int
 toWeight (CommandCount command count) = count * (length command)
