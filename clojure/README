@@ -1,0 +1,6 @@
+To run:
+
+lein run -m noodle.core/main
+
+
+(outputs hooooo)

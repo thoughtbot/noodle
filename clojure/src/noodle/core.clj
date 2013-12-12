@@ -33,5 +33,11 @@
 
 (defn run
   [in]
-  (println
-    (pretty-print (sort-by-weight (weights (counts (map parse-history-line (line-seq in))))))
+  (println (pretty-print 
+             (sort-by-weight 
+               (weights 
+                 (counts (map parse-history-line (line-seq in))))))))
+
+(defn main
+  []
+  (println "hoooo"))
