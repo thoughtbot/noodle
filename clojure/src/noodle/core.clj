@@ -1,6 +1,17 @@
 (ns noodle.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn parse-history-line
+  [line]
+  (nth (clojure.string/split line #"\s+") 2))
+
+(defn counts
+  [commands]
+  (frequencies commands))
+
+(defn weight
+  [acc v]
+  (merge { (first v) (* (count (first v)) (second v)) } acc))
+
+(defn weights
+  [counts]
+  (fold {} weight counts))
