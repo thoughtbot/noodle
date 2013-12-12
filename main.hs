@@ -14,8 +14,8 @@ toInvocation :: String -> Invocation
 toInvocation = last . take 2 . words
 
 topTen :: [InvocationWithCost] -> [InvocationWithCost]
-topTen = take 10 . reverse
+topTen = take 50 . reverse
        . sortBy (compareCosts `on` snd)
 
 prettyPrint :: InvocationWithCost -> String
-prettyPrint = show
+prettyPrint (i,c) = i ++ ": " ++ show (weight c)
