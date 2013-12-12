@@ -14,4 +14,4 @@
 
 (defn weights
   [counts]
-  (fold {} weight counts))
+  (reduce {} weight counts))
