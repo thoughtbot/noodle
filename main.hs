@@ -11,11 +11,10 @@ main = do
     mapM_ putStrLn $ prettyPrint $ topTen $ costs $ map toInvocation lns
 
 toInvocation :: String -> Invocation
-toInvocation = head . words
+toInvocation = last . take 2 . words
 
 topTen :: [InvocationWithCost] -> [InvocationWithCost]
-topTen = take 10
-       . reverse
+topTen = take 10 . reverse
        . sortBy (compareCosts `on` snd)
 
 prettyPrint :: [InvocationWithCost] -> [String]
