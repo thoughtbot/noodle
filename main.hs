@@ -8,7 +8,7 @@ main :: IO ()
 main = do
     lns <- fmap lines getContents
 
-    mapM_ putStrLn $ prettyPrint $ topTen $ costs $ map toInvocation lns
+    mapM_ putStrLn $ map prettyPrint $ topTen $ costs $ map toInvocation lns
 
 toInvocation :: String -> Invocation
 toInvocation = last . take 2 . words
@@ -17,5 +17,5 @@ topTen :: [InvocationWithCost] -> [InvocationWithCost]
 topTen = take 10 . reverse
        . sortBy (compareCosts `on` snd)
 
-prettyPrint :: [InvocationWithCost] -> [String]
-prettyPrint = map show
+prettyPrint :: InvocationWithCost -> String
+prettyPrint = show
