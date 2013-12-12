@@ -1,6 +1,5 @@
 To run:
 
-lein run -m noodle.core/main
+history 0 | lein run -m noodle.core/main
 
-
-(outputs hooooo)
+(output's legit.)

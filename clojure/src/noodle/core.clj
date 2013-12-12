@@ -40,4 +40,4 @@
 
 (defn main
   []
-  (println "hoooo"))
+  (run (java.io.BufferedReader. *in*)))
