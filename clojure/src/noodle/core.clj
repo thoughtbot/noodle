@@ -1,4 +1,4 @@
-(ns noodle-clj.core)
+(ns noodle.core)
 
 (defn foo
   "I don't do a whole lot."

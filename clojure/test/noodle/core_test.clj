@@ -1,6 +1,6 @@
-(ns noodle-clj.core-test
+(ns noodle.core-test
   (:require [clojure.test :refer :all]
-            [noodle-clj.core :refer :all]))
+            [noodle.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
