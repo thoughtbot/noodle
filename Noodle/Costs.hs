@@ -1,4 +1,4 @@
-module Noodle.Costs (costs) where
+module Noodle.Costs where
 
 type Invocation = String
 
@@ -11,6 +11,12 @@ type InvocationWithCost = (Invocation, Cost)
 
 costs :: [Invocation] -> [InvocationWithCost]
 costs = foldl addCosts []
+
+compareCosts :: Cost -> Cost -> Ordering
+compareCosts c1 c2 = compare (weight c1) (weight c2)
+
+weight :: Cost -> Int
+weight (Cost cnt len) = cnt * len
 
 addCosts :: [InvocationWithCost] -> Invocation -> [InvocationWithCost]
 addCosts invocations invocation = updateCosts newCost
