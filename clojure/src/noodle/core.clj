@@ -30,3 +30,8 @@
                          (compare [(get m key2) key2]
                                   [(get m key1) key1])))
         m))
+
+(defn run
+  [in]
+  (println
+    (pretty-print (sort-by-weight (weights (counts (map parse-history-line (line-seq in))))))
