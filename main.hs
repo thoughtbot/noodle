@@ -1,6 +1,6 @@
 module Main where
 
-import Noodle
+import Noodle.Costs
 
 main :: IO ()
 main = undefined
