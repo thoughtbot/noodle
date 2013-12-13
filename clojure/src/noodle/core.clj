@@ -1,6 +1,6 @@
 (ns noodle.core)
 
-(defn parse-history-line
+(defn history-line->command
   [line]
   (nth (clojure.string/split line #"\s+") 2))
 
@@ -33,7 +33,7 @@
 
 (defn run
   [in]
-  (-> (map parse-history-line (line-seq in))
+  (-> (map history-line->command (line-seq in))
       counts
       weights
       sort-by-weight

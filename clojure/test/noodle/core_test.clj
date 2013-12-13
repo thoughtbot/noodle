@@ -4,7 +4,7 @@
 
 (deftest parser
   (testing "Parsing a history into a vector of commands"
-    (is (= "cd" (parse-history-line "  10 cd foo\n")))))
+    (is (= "cd" (history-line->command "  10 cd foo\n")))))
 
 (deftest counter
   (testing "Returning frequency counts for commands"
