@@ -16,13 +16,17 @@
     (clojure.string/join (map format-one history-map))))
 
 (defn weight
+  [command invocation-count]
+  (* invocation-count (count command)))
+
+(defn- weight-comparator
   [m key1 key2]
-  (compare [(* (get m key2) (count key2)) key2]
-           [(* (get m key1) (count key1)) key1]))
+  (compare [(weight key2 (get m key2)) key2]
+           [(weight key1 (get m key1)) key1]))
 
 (defn sort-by-weight
   [m]
-  (into (sorted-map-by (partial weight m)) m))
+  (into (sorted-map-by (partial weight-comparator m)) m))
 
 (defn format-history-lines
   [history-lines]
