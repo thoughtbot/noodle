@@ -9,13 +9,11 @@
   [commands]
   (frequencies commands))
 
-(defn print-one
-  [[command weight]]
-  (format "%s: %d\n" command weight))
-
 (defn format-history-map
   [history-map]
-  (clojure.string/join (map print-one history-map)))
+  (letfn [(format-one [[command weight]]
+            (format "%s: %d\n" command weight))]
+    (clojure.string/join (map format-one history-map))))
 
 (defn weight
   [m key1 key2]
