@@ -18,7 +18,7 @@
 (deftest sorter
   (testing "Sorting the results by weight"
     (is (= (vector ["ls" 8] ["rake" 2] ["zsh" 2])
-           (vec (sort-by-weight { "rake" 2 "ls" 8 "zsh" 2 }))))))
+           (sort-by-weight { "rake" 2 "ls" 8 "zsh" 2 })))))
 
 (def history
   ["  130 ls",
