@@ -15,10 +15,6 @@
   [m]
   (reverse (sort-by (partial apply weight) (vec m))))
 
-(defn counts
-  [commands]
-  (frequencies commands))
-
 (defn format-history-map
   [history-map]
   (letfn [(format-one [[command weight]]
@@ -31,7 +27,7 @@
      format-history-map
      (partial take 10)
      sort-by-weight
-     counts
+     frequencies
      (partial map history-line->command))
    history-lines))
 

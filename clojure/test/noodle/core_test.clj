@@ -6,11 +6,6 @@
   (testing "Parsing a line from zsh_history into a command"
     (is (= "cd" (history-line->command "  10 cd foo\n")))))
 
-(deftest counter
-  (testing "Returning frequency counts for commands"
-    (is (= { "cd" 2 } (counts ["cd" "cd"])))
-    (is (= { "rake" 3 "cd" 2 } (counts ["rake" "rake" "rake" "cd" "cd"])))))
-
 (deftest printer
   (testing "Pretty-printing the commands with their weights"
     (is (= "cd: 4\nrake: 3\nzsh: 1\n" (format-history-map { "zsh" 1 "rake" 3 "cd" 4 })))))
