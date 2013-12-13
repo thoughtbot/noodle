@@ -23,13 +23,11 @@
 
 (defn format-history-lines
   [history-lines]
-  ((comp
-     format-history-map
-     (partial take 10)
-     sort-by-weight
-     frequencies
-     (partial map history-line->command))
-   history-lines))
+  (->> (map history-line->command history-lines)
+       (frequencies)
+       (sort-by-weight)
+       (take 10)
+       (format-history-map)))
 
 (defn -main
   "Prints the top 10 most-costly commands and their frequencies"
