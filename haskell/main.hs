@@ -18,22 +18,21 @@ parse = map (lastOr "" . take 2 . words) . lines
         lastOr v [] = v
         lastOr _ xs = last xs
 
-costs :: [String] -> [CommandCount]
-costs commands = map (uncurry CommandCount) $ M.toList
-               $ M.fromListWith (+) [(command, 1) | command <- commands]
+counts :: [String] -> [CommandCount]
+counts commands = map (uncurry CommandCount) $ M.toList
+                $ M.fromListWith (+) [(command, 1) | command <- commands]
 
-toWeight :: CommandCount -> Int
-toWeight (CommandCount command count) = count * (length command)
+weight :: CommandCount -> Int
+weight (CommandCount command count) = count * (length command)
 
 top :: Int -> [CommandCount] -> [CommandCount]
-top n = take n . reverse . sortBy (compare `on` toWeight)
+top n = take n . reverse . sortBy (compare `on` weight)
 
 main :: IO ()
 main = do
     lim <- fmap (readFirstOr 10) getArgs
-    commands <- fmap parse getContents
 
-    mapM_ print $ top lim $ costs commands
+    mapM_ print . top lim . counts . parse =<< getContents
 
     where
         readFirstOr v []    = v
