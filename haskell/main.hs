@@ -2,6 +2,7 @@ module Main where
 
 import Data.Function (on)
 import Data.List (sort)
+import Data.Maybe (mapMaybe)
 import System.Environment (getArgs)
 
 import qualified Data.Map as M
@@ -26,10 +27,10 @@ main = do
         readFirstOr _ (x:_) = read x
 
 parse :: String -> [String]
-parse = map (lastOr "" . take 2 . words) . lines
+parse = mapMaybe (last' . take 2 . words) . lines
     where
-        lastOr v [] = v
-        lastOr _ xs = last xs
+        last' [] = Nothing
+        last' xs = Just $ last xs
 
 counts :: [String] -> [CommandCount]
 counts = map (uncurry CommandCount) . M.toList . countsMap
