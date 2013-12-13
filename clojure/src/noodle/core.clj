@@ -43,4 +43,5 @@
     java.io.BufferedReader.
     line-seq
     format-history-lines
-    print))
+    print)
+  (flush))
