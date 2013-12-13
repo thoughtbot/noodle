@@ -1,7 +1,7 @@
 (ns noodle.core)
 
 (defn history-line->command
-  "Returns the command name a zsh_history-style line"
+  "Returns the command from a zsh_history-style line"
   [line]
   (nth (clojure.string/split line #"\s+") 2))
 
@@ -16,6 +16,7 @@
     (clojure.string/join (map format-one history-map))))
 
 (defn weight
+  "Returns a number representing how much time you've spent typing a command"
   [command invocation-count]
   (* invocation-count (count command)))
 
@@ -34,6 +35,7 @@
    history-lines))
 
 (defn main
+  "Prints the top 10 most-costly commands and their frequencies"
   []
   (->
     *in*
