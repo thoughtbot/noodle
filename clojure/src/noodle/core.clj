@@ -28,10 +28,13 @@
 
 (defn print-history-lines
   [history-lines]
-  (-> (map history-line->command history-lines)
-      counts
-      sort-by-weight
-      pretty-print))
+  ((comp
+     pretty-print
+     (partial take 10)
+     sort-by-weight
+     counts
+     (partial map history-line->command))
+   history-lines))
 
 (defn main
   []
