@@ -1,3 +1,5 @@
-# Noodle
+# Noodle in Haskell
 
-Commandline history analysis.
+```
+$ history 0 | ./main.hs
+```
