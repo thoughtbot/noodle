@@ -34,7 +34,7 @@
      (partial map history-line->command))
    history-lines))
 
-(defn main
+(defn -main
   "Prints the top 10 most-costly commands and their frequencies"
   []
   (->
