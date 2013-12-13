@@ -5,6 +5,15 @@
   [line]
   (nth (clojure.string/split line #"\s+") 2))
 
+(defn weight
+  "Returns a number representing how much time you've spent typing a command"
+  [command invocation-count]
+  (* invocation-count (count command)))
+
+(defn sort-by-weight
+  [m]
+  (reverse (sort-by (partial apply weight) (vec m))))
+
 (defn counts
   [commands]
   (frequencies commands))
@@ -14,15 +23,6 @@
   (letfn [(format-one [[command weight]]
             (format "%s: %d\n" command weight))]
     (clojure.string/join (map format-one history-map))))
-
-(defn weight
-  "Returns a number representing how much time you've spent typing a command"
-  [command invocation-count]
-  (* invocation-count (count command)))
-
-(defn sort-by-weight
-  [m]
-  (reverse (sort-by (partial apply weight) (vec m))))
 
 (defn format-history-lines
   [history-lines]
