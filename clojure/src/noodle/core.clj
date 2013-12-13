@@ -13,9 +13,9 @@
   [[command weight]]
   (format "%s: %d\n" command weight))
 
-(defn pretty-print
-  [m]
-  (clojure.string/join (map print-one m)))
+(defn format-history-map
+  [history-map]
+  (clojure.string/join (map print-one history-map)))
 
 (defn weight
   [m key1 key2]
@@ -26,10 +26,10 @@
   [m]
   (into (sorted-map-by (partial weight m)) m))
 
-(defn print-history-lines
+(defn format-history-lines
   [history-lines]
   ((comp
-     pretty-print
+     format-history-map
      (partial take 10)
      sort-by-weight
      counts
@@ -38,4 +38,9 @@
 
 (defn main
   []
-  (println (print-history-lines (line-seq (java.io.BufferedReader. *in*)))))
+  (->
+    *in*
+    java.io.BufferedReader.
+    line-seq
+    format-history-lines
+    println))
