@@ -1,0 +1,20 @@
+    1  screen -S chi
+    2  git checkout -b pb-pry-rails
+    3  git commit -am 'Add pry-rails'
+    4  git push -u origin pb-pry-rails
+    5  git checkout -b pb-add-date-sent
+    6  nano vimrc
+    7  nano ~/.vimrc
+    8  pgrep vim
+    9  killall -9 vim
+   10  git grep date_received
+   11  git commit -m 'Add date_sent'
+   12  git push -u origin pb-add-date-sent
+   13  git checkout -b pb-coverage-fixups
+   14  rm -r app/validators/email_validator.rb
+   15  vim app/helpers/search_helper.rb
+   16  vim spec/models/risk_
+   17  vim spec/models/risk_trigger_spec.rb
+   18  vim spec/models/notice_search_result_spec.rb
+   19  be rake SPEC_OPTS=--no-drb
+   20  git push -u origin pb-coverage-fixups

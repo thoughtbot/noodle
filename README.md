@@ -24,3 +24,9 @@ Feel free to noodle around.
 For example, you may call `ls` three times and `rake` twice. In this 
 case, `rake` is more costly (4 * 2 = 8) even though it's called fewer 
 times than `ls` (2 * 3 = 6).
+
+## To Test an Implementation
+
+```
+$ diff ./files/expected.txt <(run-your-program < ./files/history.txt)
+```

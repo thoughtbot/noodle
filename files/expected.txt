@@ -1,0 +1,8 @@
+git: 9 times
+vim: 4 times
+nano: 2 times
+killall: 1 times
+screen: 1 times
+pgrep: 1 times
+rm: 1 times
+be: 1 times
