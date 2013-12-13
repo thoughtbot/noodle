@@ -3,7 +3,7 @@
             [noodle.core :refer :all]))
 
 (deftest parser
-  (testing "Parsing a history into a vector of commands"
+  (testing "Parsing a line from zsh_history into a command"
     (is (= "cd" (history-line->command "  10 cd foo\n")))))
 
 (deftest counter

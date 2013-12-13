@@ -1,6 +1,7 @@
 (ns noodle.core)
 
 (defn history-line->command
+  "Returns the command name a zsh_history-style line"
   [line]
   (nth (clojure.string/split line #"\s+") 2))
 
