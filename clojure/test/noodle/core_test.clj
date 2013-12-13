@@ -11,14 +11,30 @@
     (is (= { "cd" 2 } (counts ["cd" "cd"])))
     (is (= { "rake" 3 "cd" 2 } (counts ["rake" "rake" "rake" "cd" "cd"])))))
 
-(deftest weight-test
-  (testing "Returns a map of weighted scores of badness"
-    (is (= { "cd" 4 } (weights { "cd" 2 })))))
-
 (deftest printer
   (testing "Pretty-printing the commands with their weights"
     (is (= "cd: 4\nrake: 3\nzsh: 1\n" (pretty-print { "zsh" 1 "rake" 3 "cd" 4 })))))
 
 (deftest sorter
   (testing "Sorting the results by weight"
-    (is (= (sorted-map "zsh" 4 "cd" 2 ) (sort-by-weight { "cd" 2 "zsh" 4 })))))
+    (is (= (vector ["ls" 8] ["rake" 2] ["zsh" 2])
+           (vec (sort-by-weight { "rake" 2 "ls" 8 "zsh" 2 }))))))
+
+(def history
+  ["  130 ls",
+   "  131 ls foo/",
+   "  131 ls",
+   "  131 ls",
+   "  131 ls src/",
+   "  131 ls",
+   "  131 ls",
+   "  131 ls",
+   "  173 rake",
+   "  183 rake",
+   "  190 zsh",
+   "  191 zsh"])
+
+(deftest print-history-lines-test
+  (testing "Pretty-printing the seq of history lines"
+    (is (= "ls: 8\nrake: 2\nzsh: 2\n"
+            (print-history-lines history)))))
