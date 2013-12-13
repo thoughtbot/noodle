@@ -1,4 +1,5 @@
-(ns noodle.core)
+(ns noodle.core
+  (:gen-class :main true))
 
 (defn history-line->command
   "Returns the command from a zsh_history-style line"
