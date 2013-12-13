@@ -35,6 +35,6 @@
    "  191 zsh"])
 
 (deftest format-history-lines-test
-  (testing "Format the seq of history lines"
+  (testing "Formatting the seq of history lines"
     (is (= "ls: 8\nrake: 2\nzsh: 2\n"
             (format-history-lines history)))))
