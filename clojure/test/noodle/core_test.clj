@@ -8,7 +8,7 @@
 
 (deftest printer
   (testing "Pretty-printing the commands with their weights"
-    (is (= "cd: 4\nrake: 3\nzsh: 1\n" (format-history-map { "zsh" 1 "rake" 3 "cd" 4 })))))
+    (is (= "cd: 4 times\nrake: 3 times\nzsh: 1 times\n" (format-history-map { "zsh" 1 "rake" 3 "cd" 4 })))))
 
 (deftest sorter
   (testing "Sorting the results by weight"
@@ -31,5 +31,5 @@
 
 (deftest format-history-lines-test
   (testing "Formatting the seq of history lines"
-    (is (= "ls: 8\nrake: 2\nzsh: 2\n"
+    (is (= "ls: 8 times\nrake: 2 times\nzsh: 2 times\n"
             (format-history-lines history)))))

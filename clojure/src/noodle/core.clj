@@ -18,7 +18,7 @@
 (defn format-history-map
   [history-map]
   (letfn [(format-one [[command weight]]
-            (format "%s: %d\n" command weight))]
+            (format "%s: %d times\n" command weight))]
     (clojure.string/join (map format-one history-map))))
 
 (defn format-history-lines
