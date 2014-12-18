@@ -1,0 +1,5 @@
+[package]
+
+name = "noodle"
+version = "0.0.1"
+authors = ["Sean Doyle <seandoyle@thoughtbot.com>"]
