@@ -8,17 +8,24 @@ use std::collections::btree_map::{
 pub struct Command {
     pub name: String,
     pub count: uint,
+    weight: uint,
 }
 
 impl Command {
-    pub fn weight(&self) -> uint {
-        self.name.len() * self.count
+    fn new(name: String, count: uint) -> Command {
+        let weight = name.len() * count;
+
+        Command {
+            name: name,
+            count: count,
+            weight: weight,
+        }
     }
 }
 
 impl Ord for Command {
     fn cmp(&self, other: &Command) -> Ordering {
-        other.weight().cmp(&self.weight())
+        other.weight.cmp(&self.weight)
     }
 }
 
@@ -40,7 +47,7 @@ fn commands_from_map(map: BTreeMap<&str,uint>) -> Vec<Command> {
         .iter()
         .map(|entry| {
             let (name, count) = entry;
-            Command { name: name.to_string(), count: *count }
+            Command::new(name.to_string(), *count)
         }).collect();
 
     commands.sort();
@@ -88,14 +95,14 @@ fn analyze_history_works() {
 20  git push -u origin pb-coverage-fixups";
 
     let expected = vec![
-        Command { name: "git".to_string(), count: 9 },
-        Command { name: "vim".to_string(), count: 4 },
-        Command { name: "nano".to_string(), count: 2 },
-        Command { name: "killall".to_string(), count: 1 },
-        Command { name: "screen".to_string(), count: 1 },
-        Command { name: "pgrep".to_string(), count: 1 },
-        Command { name: "rm".to_string(), count: 1 },
-        Command { name: "be".to_string(), count: 1 },
+        Command::new("git".to_string(), 9),
+        Command::new("vim".to_string(), 4),
+        Command::new("nano".to_string(), 2),
+        Command::new("killall".to_string(), 1),
+        Command::new("screen".to_string(), 1),
+        Command::new("pgrep".to_string(), 1),
+        Command::new("rm".to_string(), 1),
+        Command::new("be".to_string(), 1),
     ];
 
     assert_eq!(analyze_history(history), expected);

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+cargo build
+
+diff ../files/expected.txt <(./target/noodle < ../files/history.txt)
