@@ -1,38 +1,20 @@
-//
-// TODO: read count from arguments
-//
-readLines(function(lines) {
+'use strict';
+
+var ITEMS_TO_PRINT = process.argv[2] || 10;
+
+readLines(function analyze(lines) {
   var countsByCommand = lines
-    .map(trim)
-    .map(split)
-    .map(pluck)
-    .sort()
-    .reduce(countByCommand, {});
+    .map(extractCommandName)
+    .reduce(collectCountsByCommand, {});
 
-  console.log('countsByCommand', countsByCommand);
-
-  function trim(line) {
-    return line.trim();
-  }
-
-  function split(line) {
-    return line.split(/\s+/);
-  }
-
-  function pluck(commandBits) {
-    return commandBits[1];
-  }
-
-  function countByCommand(counts, command) {
-    if (command in counts) counts[command]++;
-    else counts[command] = 1;
-
-    return counts;
-  }
+  hashToArray(countsByCommand)
+    .map(addWeight)
+    .sort(descendingByWeight)
+    .slice(0, ITEMS_TO_PRINT)
+    .forEach(print);
 });
 
-
-function readLines(processorFunction) {
+function readLines(callback) {
   var readline = require('readline');
   var stdinReader = readline.createInterface({
     input: process.stdin
@@ -41,10 +23,41 @@ function readLines(processorFunction) {
   var lines = [];
 
   stdinReader
-    .on('line', collectInto(lines))
-    .on('close', processorFunction.bind(this, lines));
+    .on('line', lines.push.bind(lines))
+    .on('close', callback.bind(this, lines));
+}
 
-  function collectInto(lines) {
-    return lines.push.bind(lines);
+function extractCommandName(line) {
+  return line.trim().split(/\s+/)[1];
+}
+
+function collectCountsByCommand(counts, command) {
+  if (command in counts) counts[command]++;
+  else counts[command] = 1;
+
+  return counts;
+}
+
+function hashToArray(hash) {
+  var array = [];
+
+  for (var key in hash) {
+    array.push({command: key, count: hash[key]});
   }
+
+  return array;
+}
+
+function addWeight(record) {
+  record.weight = record.command.length * record.count;
+
+  return record;
+}
+
+function descendingByWeight(record1, record2) {
+  return record2.weight - record1.weight;
+}
+
+function print(record) {
+  console.log('%s: %d times', record.command, record.count);
 }
